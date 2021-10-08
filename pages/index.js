@@ -2,8 +2,6 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
 import { useEffect, useState, useRef } from "react";
-import Web3 from "web3";
-import { ethers } from "ethers";
 import { useWeb3React, Web3ReactProvider } from "@web3-react/core";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -14,6 +12,16 @@ const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] });
 const wcConnector = new WalletConnectConnector({
   infuraId: "517bf3874a6848e58f99fa38ccf9fce4",
 });
+
+const ConnectorNames = {
+  Injected: "injected",
+  WalletConnect: "walletconnect",
+};
+
+const W3Operations = {
+  Connect: "connect",
+  Disconnect: "disconnect",
+};
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -39,10 +47,9 @@ function Home() {
     "latest_connector",
     ""
   );
-  console.log(web3React);
+  // console.log(web3React);
 
   useEffect(() => {
-    console.log("use effect called", web3React.active);
     if (latestOp == "connect" && latestConnector == "injected") {
       injected
         .isAuthorized()
@@ -53,7 +60,6 @@ function Home() {
           }
         })
         .catch(() => {
-          console.log("Inside catch");
           setLoaded(true);
         });
     } else if (latestOp == "connect" && latestConnector == "wcconnector") {
@@ -69,10 +75,8 @@ function Home() {
       </Head>
       <div
         onClick={() => {
-          console.log("metamask clicked");
-          console.log(injected);
-          setLatestConnector("injected");
-          setLatestOp("connect");
+          setLatestConnector(ConnectorNames.Injected);
+          setLatestOp(W3Operations.Connect);
           web3React.activate(injected);
         }}
       >
@@ -80,19 +84,22 @@ function Home() {
       </div>
       <div
         onClick={() => {
-          setLatestConnector("wcconnector");
-          setLatestOp("connect");
+          setLatestConnector(ConnectorNames.WalletConnect);
+          setLatestOp(W3Operations.Connect);
           web3React.activate(wcConnector);
         }}
       >
         walletconnect
       </div>
-      {web3React.active ? <div>Connected as {web3React.account}</div> : null}
+      {web3React.active ? (
+        <div>
+          Connected as {web3React.account} on {web3React.chainId}
+        </div>
+      ) : null}
       {web3React.active ? (
         <div
           onClick={() => {
-            console.log("disconnect clicked");
-            setLatestOp("disconnect");
+            setLatestOp(W3Operations.Disconnect);
             web3React.deactivate();
           }}
         >
