@@ -1,6 +1,3 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-
 import { useEffect, useState, useRef } from "react";
 import { useWeb3React, Web3ReactProvider } from "@web3-react/core";
 import { InjectedConnector } from "@web3-react/injected-connector";
@@ -65,7 +62,6 @@ function Home() {
           setLoaded(true);
         });
     } else if (latestOp == "connect" && latestConnector == "walletconnect") {
-      console.log("Should be here");
       web3React.activate(wcConnector);
     }
   }, []);
@@ -83,13 +79,10 @@ function Home() {
         return "Mainnet";
       case 3:
         return "Ropsten";
-
       case 4:
         return "Rinkeby";
-
       case 5:
         return "Goerli";
-
       case 42:
         return "Kovan";
       default:
@@ -98,8 +91,8 @@ function Home() {
   };
 
   return (
-    <layout>
-      <div className={styles.container}>
+    <Layout>
+      <div className="container">
         {!web3React.active ? (
           <div className="connect-wallet-container">
             <div className="connect-wallet-card">
@@ -163,6 +156,16 @@ function Home() {
         ) : null}
 
         <style jsx>{`
+          .container {
+            min-height: 100vh;
+            padding: 0 0.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fafafa;
+          }
           .connect-wallet-container {
             display: flex;
             width: 400px;
@@ -240,6 +243,6 @@ function Home() {
           }
         `}</style>
       </div>
-    </layout>
+    </Layout>
   );
 }
