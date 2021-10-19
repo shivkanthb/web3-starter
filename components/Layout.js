@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Layout({ children }) {
   return (
-    <div>
+    <>
       <Head>
         <link
           rel="preload"
@@ -24,6 +24,6 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       {children}
-    </div>
+    </>
   );
 }

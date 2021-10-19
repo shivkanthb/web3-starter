@@ -155,15 +155,25 @@ function Home() {
           </>
         ) : null}
 
+        <div className="github">
+          <a
+            href="https://github.com/shivkanthb/web3-starter"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Github{" "}
+          </a>
+        </div>
+
         <style jsx>{`
           .container {
             min-height: 100vh;
-            padding: 0 0.5rem;
+            /* padding: 0 0.5rem; */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            /* height: 100vh; */
             background-color: #fafafa;
           }
           .connect-wallet-container {
@@ -241,6 +251,24 @@ function Home() {
             border: none;
             margin: unset;
           }
+
+          .github {
+            position: fixed;
+            bottom: 30px;
+          }
+
+          @media screen and (max-width: 400px) {
+            .connect-wallet-container {
+              width: 80%;    
+            }
+
+            .button {
+              width: 240px;
+            }
+
+            .connected-container, .row  {
+              width: 300px;
+            }
         `}</style>
       </div>
     </Layout>
